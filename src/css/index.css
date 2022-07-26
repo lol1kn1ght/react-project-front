@@ -1,0 +1,9 @@
+* {
+  --default-button-color: #ffffff;
+  --default-button-hover-color: #414453;
+}
+
+body {
+  margin: 0;
+  height: 10000px;
+}

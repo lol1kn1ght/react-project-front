@@ -1,0 +1,60 @@
+@import url("./index.css");
+
+header {
+  width: 100%;
+  background: #21242d;
+  position: fixed;
+}
+
+.header-navigate-button,
+.header-navigate-button:visited {
+  text-decoration: none;
+  color: var(--default-button-color);
+}
+
+.header-navigate-button {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.header-navigate-place a:hover {
+  background-color: var(--default-button-hover-color);
+  transition: 0.8s background-color;
+}
+
+.header-navigate-place a:not(:hover) {
+  background-color: 0;
+  transition: 0.8s background-color;
+}
+
+.header-navigate-buttons-container {
+  height: 90px;
+  width: 100%;
+  border-radius: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.header-logo-place {
+  width: 15%;
+}
+
+.header-navigate-place {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-basis: 40%;
+}
+
+.header-navigate-profile-place {
+  width: 15%;
+}
