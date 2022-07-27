@@ -1,25 +1,46 @@
-type events_type = "login" | "logout";
-type event_callback_type = (...args: any) => any;
+import { login_data_type } from "types";
 
-export class EventBus {
-  private _events_list: {
-    [event_name in events_type]?: event_callback_type[];
-  } = {};
+type event_callback<Event = undefined> = (data: Event) => any;
+type events_list_type = {
+  login: event_callback<login_data_type>[];
+  logout: event_callback[];
+};
 
-  addEventListener(event_name: events_type, callback: event_callback_type) {
-    const current_event_list = this._events_list[event_name] || [];
+export class EventsBus {
+  private _events_list: events_list_type = {
+    login: [],
+    logout: [],
+  };
 
-    current_event_list.push(callback);
-    this._events_list[event_name] = current_event_list;
+  addLoginEventListener(callback: event_callback<login_data_type>) {
+    const login_events = this._events_list.login;
+
+    login_events.push(callback);
   }
 
-  emit(event_name: events_type, ...args: any) {
-    const callbacks_arr = this._events_list[event_name];
+  addLogoutEventListener(callback: event_callback) {
+    const logout_events = this._events_list.logout;
 
-    if (!callbacks_arr) return;
+    logout_events.push(callback);
+  }
 
-    for (const callback of callbacks_arr) {
-      callback(args);
+  emit(event_name: "logout"): void;
+  emit(event_name: "login", data: login_data_type): void;
+  emit(event_name: "login" | "logout", data?: login_data_type) {
+    if (event_name === "login") {
+      const callbacks_list = this._events_list.login;
+
+      for (const callback of callbacks_list) {
+        if (data) callback(data);
+      }
+    }
+
+    if (event_name === "logout") {
+      const callbacks_list = this._events_list.logout;
+
+      for (const callback of callbacks_list) {
+        callback(undefined);
+      }
     }
   }
 }
