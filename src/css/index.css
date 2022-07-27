@@ -5,11 +5,12 @@
 
 body {
   margin: 0;
-  height: 10000px;
+  background: #272933;
 }
 
 .content-container {
   width: 100%;
-  height: 100vh;
+  height: 87vh;
   padding-top: 90px;
+  display: flex;
 }
