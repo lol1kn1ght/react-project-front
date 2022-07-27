@@ -1,17 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import { App } from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { EventBus } from "Bus";
-import { api_user_data_type } from "types";
 
-const bus = new EventBus();
-bus.addEventListener("login", (data: api_user_data_type) => {
-  console.log("ЛОГИН ПРОИЗОШЕЛ");
+import { EventsBus } from "Bus";
+import { storage_type } from "types";
+export const Bus = new EventsBus();
+
+export const storage: storage_type = {
+  user: {
+    discriminator: "1061",
+    flags: 560,
+    id: "348038599083556864",
+    username: "loli_knight",
+    avatar:
+      "https://images-ext-1.discordapp.net/external/-6W4njUjzMgziglsAZs-2OOS7Avs2jyL0DEhpGTABNI/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/348038599083556864/746fe2541b192d9d307106e94f1e6969.webp",
+  },
+};
+
+setTimeout(() => Bus.emit("logout"), 5000);
+
+Bus.addLogoutEventListener(() => {
+  if (storage.user) delete storage.user;
 });
-console.log("слушатель навешан");
-
-bus.emit("login", { test: 50 });
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
