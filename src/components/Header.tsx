@@ -1,9 +1,40 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import "../css/Header.css";
+import { Bus } from "index";
+
+import { storage } from "index";
 
 export class Header extends React.Component {
+  componentDidMount() {
+    Bus.addLogoutEventListener(() => {
+      this.setState({});
+    });
+  }
+
   render() {
+    const user_data = storage.user;
+    let user_place: JSX.Element | undefined;
+
+    if (user_data) {
+      user_place = (
+        <>
+          <img src={user_data.avatar} alt='' className='header-user-avatar' />
+          <div className='header-user-username'>
+            {user_data.username}#{user_data.discriminator}
+          </div>
+        </>
+      );
+    } else {
+      user_place = (
+        <a
+          href={process.env.REACT_APP_AUTHORISE_URL}
+          className='header-navigate-button'>
+          Авторизоваться
+        </a>
+      );
+    }
+
     return (
       <header>
         <div className='header-navigate-buttons-container'>
@@ -34,9 +65,8 @@ export class Header extends React.Component {
               </Link>
             </div>
           </div>
-          <div className='header-navigate-profile-place header-navigate-button'>
-            TEst placeholder
-          </div>
+
+          <div className='header-navigate-profile-place'>{user_place}</div>
         </div>
       </header>
     );
