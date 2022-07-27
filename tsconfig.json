@@ -16,8 +16,14 @@
     "jsx": "react-jsx",
     "sourceMap": true,
     "noEmitHelpers": true,
+    "baseUrl": "src",
     "paths": {
-      "svg": ["./src/data/svg/index.tsx"]
+      "svg": ["data/svg/index.tsx"],
+      "components/*": ["components/*"],
+      "css/*": ["css/*"],
+      "src/*": ["../src/*"],
+      "Bus": ["Bus.ts"],
+      "types": ["types.ts"]
     }
   },
   "include": ["src"]
