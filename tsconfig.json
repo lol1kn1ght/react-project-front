@@ -23,7 +23,8 @@
       "css/*": ["css/*"],
       "src/*": ["../src/*"],
       "Bus": ["Bus.ts"],
-      "types": ["types.ts"]
+      "types": ["types.ts"],
+      "tools/*": ["components/tools/*"]
     }
   },
   "include": ["src"]
