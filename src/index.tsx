@@ -2,11 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
 import { BrowserRouter } from "react-router-dom";
-
 import { EventsBus } from "Bus";
 import { storage_type } from "types";
-export const Bus = new EventsBus();
 
+export const Bus = new EventsBus();
 export const storage: storage_type = {
   user: {
     discriminator: "1061",
@@ -27,11 +26,9 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
