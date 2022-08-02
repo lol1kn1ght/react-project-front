@@ -1,64 +1,59 @@
 import React from "react";
-import { Bus } from "index";
+
 import { loading_plate } from "./tools/loading";
-import { api_user_data_type } from "types";
-import axios from "axios";
+import { api_login_type, api_user_data_type } from "types";
+
 import crypto from "crypto-js";
-
-(window as any).process = {};
-
-type hash_data_type = {
-  token_type: string;
-  access_token: string;
-  expires_in: string;
-  scope: string;
-};
+import { Navigate } from "react-router-dom";
+import { authorise_member } from "functions/authorise_member";
 
 export class Login extends React.Component {
   state: Readonly<{
     user?: api_user_data_type;
   }> = {};
+
   async componentDidMount() {
     const hash_data_arr = window.location.hash.split("&").map((hash) => {
       const hash_arr = hash.replace("#", "").split("=");
 
       return { [hash_arr[0]]: hash_arr[1] };
-    }) as hash_data_type[];
+    }) as api_login_type[];
 
-    const hash_data: hash_data_type = {
+    const req_data: api_login_type = {
       token_type: "",
       access_token: "",
-      expires_in: "",
-      scope: "",
     };
 
     for (const hash of hash_data_arr) {
       const key = Object.keys(hash)[0];
-      hash_data[key as keyof typeof hash_data] = hash[key as keyof typeof hash];
+      if (key in req_data)
+        req_data[key as keyof typeof req_data] = hash[key as keyof typeof hash];
     }
 
-    const authorise_data = await this.authorise(hash_data);
-    console.log(authorise_data);
+    await this.authorise(req_data);
   }
 
-  async authorise(data: hash_data_type) {
-    const encrypted_data = this.ecnrypt_data(JSON.stringify(data));
-    const response = await axios.post("http://localhost:3001/api/login", {
-      encrypted_data,
-    });
+  async authorise(data: api_login_type) {
+    const authorised_data = await authorise_member(data);
 
-    console.log(response);
+    if (authorised_data)
+      this.setState({
+        user: authorised_data.db_user_data,
+      });
   }
 
   render(): React.ReactNode {
-    return <>{loading_plate}</>;
+    if (this.state.user) {
+      return <Navigate replace to='/dashboard' />;
+    } else {
+      return <>{loading_plate}</>;
+    }
   }
 
-  ecnrypt_data<Data extends string>(data: Data) {
-    const ecnrypted_data = crypto.AES.encrypt(
-      data,
-      process.env.REACT_APP_HASH_KEY
-    ).toString();
-    return ecnrypted_data;
+  decrypt_data<Data extends string>(hash: Data) {
+    const bytes = crypto.AES.decrypt(hash, process.env.REACT_APP_HASH_KEY);
+    const decryptedData = JSON.parse(bytes.toString(crypto.enc.Utf8));
+
+    return decryptedData;
   }
 }

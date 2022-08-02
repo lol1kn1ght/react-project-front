@@ -10,16 +10,26 @@ export class Header extends React.Component {
     Bus.addLogoutEventListener(() => {
       this.setState({});
     });
+
+    Bus.addLoginEventListener(() => {
+      this.setState({});
+    });
   }
 
   render() {
-    const user_data = storage.user;
+    const user_data = storage.api_user;
     let user_place: JSX.Element | undefined;
 
     if (user_data) {
+      const avatar_url = `https://cdn.discordapp.com/avatars/${user_data.id}/${user_data.avatar}`;
+
       user_place = (
         <>
-          <img src={user_data.avatar} alt='' className='header-user-avatar' />
+          <img
+            src={avatar_url}
+            alt='Аватар пользователя'
+            className='header-user-avatar'
+          />
           <div className='header-user-username'>
             {user_data.username}#{user_data.discriminator}
           </div>
