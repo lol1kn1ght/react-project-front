@@ -34,6 +34,7 @@ export type db_user_type = {
 export type session_id_type = {
   token: string;
   expired_at: number;
+  member_id: string;
 };
 
 export type login_response_type = Partial<{

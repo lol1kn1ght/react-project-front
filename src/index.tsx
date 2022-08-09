@@ -10,9 +10,7 @@ export const storage: storage_type = {};
 Bus.addLogoutEventListener(() => {
   if (storage.db_user) delete storage.db_user;
 });
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("app") as HTMLElement);
 root.render(
   <BrowserRouter>
     <App />

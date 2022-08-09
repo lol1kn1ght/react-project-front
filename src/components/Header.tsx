@@ -65,9 +65,17 @@ export class Header extends React.Component {
               </Link>
             </div>
             <div className='header-navigate-button'>
-              <Link to='/dashboard' className='header-navigate-button'>
-                Список серверов
-              </Link>
+              {storage.api_user ? (
+                <Link to={"/dashboard"} className='header-navigate-button'>
+                  Список серверов
+                </Link>
+              ) : (
+                <a
+                  href={process.env.REACT_APP_AUTHORISE_URL}
+                  className='header-navigate-button'>
+                  Список серверов
+                </a>
+              )}
             </div>
             <div className='header-navigate-button'>
               <Link to='/help' className='header-navigate-button'>

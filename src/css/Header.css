@@ -4,12 +4,13 @@ header {
   width: 100%;
   background: #21242d;
   position: fixed;
+  z-index: 10;
 }
 
 .header-navigate-button,
 .header-navigate-button:visited {
   text-decoration: none;
-  color: var(--default-button-color);
+  color: var(--default-navigate-button-color);
   cursor: pointer;
 }
 
@@ -27,12 +28,12 @@ header {
 }
 
 .header-navigate-place a:hover {
-  background-color: var(--default-button-hover-color);
+  background-color: var(--default-navigate-button-hover-color);
   transition: 0.8s background-color;
 }
 
 .header-navigate-profile-place:hover {
-  background-color: var(--default-button-hover-color);
+  background-color: var(--default-navigate-button-hover-color);
   transition: 0.8s background-color;
 }
 

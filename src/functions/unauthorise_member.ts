@@ -5,6 +5,7 @@ export async function unauthorise_member() {
   delete storage.db_user;
 
   window.localStorage.removeItem("session_id");
+  console.log("logout");
 
   Bus.emit("logout");
 }

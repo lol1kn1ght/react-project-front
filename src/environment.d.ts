@@ -7,4 +7,7 @@ declare global {
   }
 }
 
+declare module "*.jpg";
+declare module "*.png";
+
 export {};

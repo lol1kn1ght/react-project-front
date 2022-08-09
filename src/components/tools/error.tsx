@@ -1,5 +1,6 @@
 import React from "react";
 import "css/error.css";
+import { Link } from "react-router-dom";
 
 type props_type = {
   error: string;
@@ -8,8 +9,6 @@ type props_type = {
 export class Error extends React.Component {
   constructor(public props: props_type) {
     super(props);
-
-    console.log(props);
   }
 
   render() {
@@ -17,6 +16,9 @@ export class Error extends React.Component {
       <div className='error-container'>
         <h1 className='error-title'>Произошла ошибка!</h1>
         <h3 className='error-content'>{this.props.error}</h3>
+        <Link to={"/"} className='default-button'>
+          Главная страница
+        </Link>
       </div>
     );
 

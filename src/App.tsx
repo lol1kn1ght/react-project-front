@@ -10,29 +10,31 @@ import { Home } from "components/Home";
 import { Login } from "components/Login";
 import { Dashboard } from "components/Dashboard";
 import { Bus } from "index";
+import { Error } from "components/tools/error";
 
 const session_id = window.localStorage.getItem("session_id");
 
 type state_type = Partial<{
   loading: boolean;
   redirect: string;
+  error: undefined | string;
 }>;
 
-export class App extends React.Component {
-  constructor(props: React.ReactPropTypes) {
-    super(props);
-    Bus.addLogoutEventListener(() => {
-      this.setState({
-        redirect: "/",
-      });
-    });
-  }
+let redirect: string | undefined;
 
+export class App extends React.Component {
   state: state_type = {
     loading: true,
   };
 
   async componentDidMount() {
+    console.log("mount");
+
+    Bus.addLogoutEventListener(() => {
+      redirect = "/";
+      this.setState({});
+    });
+
     if (!session_id) {
       this.setState({
         loading: false,
@@ -69,10 +71,19 @@ export class App extends React.Component {
       return;
     }
 
-    await authorise_member({
+    const authorise_data = await authorise_member({
       access_token: token,
       token_type: "Bearer",
     });
+
+    if (!authorise_data) {
+      this.setState({
+        loading: false,
+        error:
+          "При попытке получить информацию об аккаунте произошла ошибка. Попробуйте позже.",
+      });
+      return;
+    }
 
     this.setState({
       loading: false,
@@ -81,12 +92,23 @@ export class App extends React.Component {
   }
 
   render() {
-    if (this.state.redirect) {
-      return <Navigate replace to={this.state.redirect} />;
+    if (redirect) {
+      const redirect_plate = <Navigate replace to={redirect} />;
+      redirect = undefined;
+      console.log(redirect);
+
+      return redirect_plate;
     }
 
     if (this.state.loading)
       return <div className='content-container'>{loading_plate}</div>;
+
+    if (this.state.error)
+      return (
+        <div className='content-container'>
+          <Error error={this.state.error} />
+        </div>
+      );
 
     return (
       <div className='App'>

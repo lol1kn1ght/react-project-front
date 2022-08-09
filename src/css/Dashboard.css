@@ -1,0 +1,78 @@
+.guilds-container {
+  display: flex;
+  margin: auto;
+  width: 80%;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.dashboard-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-title {
+  width: max-content;
+  padding: 50px;
+  color: white;
+  cursor: default;
+}
+
+.guild {
+  width: 400px;
+  height: 80px;
+  background: #414453;
+  margin-top: 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+
+.guild.manageable:hover {
+  background-color: #505366;
+  transition: background-color 0.5s;
+}
+
+.guild:not(.manageable) {
+  opacity: 50%;
+}
+
+.guild:not(.manageable):hover {
+  opacity: 100%;
+  transition: opacity 0.5s;
+}
+
+.guild:not(.manageable):not(:hover) {
+  opacity: 50%;
+  transition: opacity 0.5s;
+}
+
+.guild-name {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  color: white;
+}
+
+.guild-icon {
+  width: 48px;
+  border-radius: 50%;
+}
+
+.icon-plate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  flex-basis: 20%;
+}
+
+.info-plate {
+  flex-basis: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
